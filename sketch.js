@@ -1,4 +1,5 @@
-var dog, happyDog, database,foodS, foodStock;
+var dog, happyDog, database,foodS;
+var foodStock;
 function preload()
 {
   dogImg=loadImage("images/dogImg1.png");
@@ -6,10 +7,12 @@ function preload()
 }
 
 function setup() {
-	createCanvas(800, 700);
-  dog.addImage(dogImg)
+  createCanvas(800, 700);
   foodStock=database.ref('Food');
   foodStock.on("value", readStock)
+  dog=createSprite(200,200,40,40);
+  dog.addImage("dog",dogImg);
+  
 }
 
 
@@ -19,7 +22,7 @@ background(46,139,87);
   
   if(keyWentDown(UP_ARROW)){
     writeStock(foodS);
-    dog.addImage(happyDogImg);
+    dog.addImage("happyDog",happyDogImg);
   }
   text(foodStock,200,200);
 
@@ -38,6 +41,6 @@ function writeStock(x){
     x=x-1
   }
   database.ref('/').update({
-    foodStock:x
+    Food:x
 })
 }
