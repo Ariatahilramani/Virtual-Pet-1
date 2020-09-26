@@ -8,24 +8,31 @@ function preload()
 
 function setup() {
   createCanvas(800, 700);
+  database=firebase.database();
+
+  dog=createSprite(200,200,40,40);
+  dog.addImage(happyDogImg);
+  dog.scale=0.5;
+
   foodStock=database.ref('Food');
   foodStock.on("value", readStock)
-  dog=createSprite(200,200,40,40);
-  dog.addImage("dog",dogImg);
+  
   
 }
 
 
 function draw() {  
 background(46,139,87);
-  drawSprites();
+
   
   if(keyWentDown(UP_ARROW)){
+    dog.addImage(dogImg);
     writeStock(foodS);
-    dog.addImage("happyDog",happyDogImg);
   }
-  text(foodStock,200,200);
-
+  stroke(10);
+  fill("black");
+  text("Food Remaining :"+foodS,400,200);
+  drawSprites();
 }
 
 
@@ -44,3 +51,4 @@ function writeStock(x){
     Food:x
 })
 }
+
